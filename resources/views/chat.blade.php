@@ -12,7 +12,7 @@
          <chat-composer @messagesent="addMessage"></chat-composer>
       </div>
       <h1>HI THIS IS LARAVEL CHAT APP</h1>
-
+      <h2>This is made on socket.io</h2>
       <script type="text/javascript" charset="utf-8" src="js/app.js">
 
       </script>
