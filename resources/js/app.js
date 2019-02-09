@@ -39,7 +39,7 @@ const app = new Vue({
         {
             this.messages.push(message);
             console.log('message send');
-            axios.post('messages', message).then();
+            axios.post('messages', message);
         }
     },
 
