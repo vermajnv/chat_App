@@ -21,16 +21,20 @@ Route::middleware('auth')->group(function() {
    });
 
    Route::get('messages', function() {
-      return App\Message::all();
+      return App\Message::with('user')->get();
+   });
+
+   Route::post('messages', function() {
+      // store messages
+      $user = Auth::user();
+      $user->messages()->create([
+         'message' => request()->get('message')
+      ]);
+
+      return ['status' => 'OK'];
    });
 });
-// Route::get('chat', function() {
-//    return view('chat');
-// })->middleware('auth');
-//
-// Route::get('messages', function() {
-//    return App\Message::all();
-// });
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
