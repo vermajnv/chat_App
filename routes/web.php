@@ -15,13 +15,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('chat', function() {
-   return view('chat');
-})->middleware('auth');
+Route::middleware('auth')->group(function() {
+   Route::get('chat', function() {
+      return view('chat');
+   });
 
-Route::get('messages', function() {
-   return App\Message::all();
+   Route::get('messages', function() {
+      return App\Message::all();
+   });
 });
+// Route::get('chat', function() {
+//    return view('chat');
+// })->middleware('auth');
+//
+// Route::get('messages', function() {
+//    return App\Message::all();
+// });
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
