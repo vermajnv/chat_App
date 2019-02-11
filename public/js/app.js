@@ -1780,7 +1780,9 @@ __webpack_require__.r(__webpack_exports__);
     sendMessage: function sendMessage() {
       this.$emit('messagesent', {
         message: this.messageText,
-        author: 'Nayan'
+        user: {
+          name: $('#navbarDropdown').text()
+        }
       });
       console.log(this.messageText);
       this.messageText = '';
@@ -37427,7 +37429,11 @@ var render = function() {
           expression: "messageText"
         }
       ],
-      attrs: { type: "text", placeholder: "start typing here..." },
+      attrs: {
+        type: "text",
+        name: "message",
+        placeholder: "start typing here..."
+      },
       domProps: { value: _vm.messageText },
       on: {
         keyup: function($event) {
@@ -37516,7 +37522,7 @@ var render = function() {
   return _c("div", { staticClass: "chat-message" }, [
     _c("p", [_vm._v(_vm._s(_vm.message.message))]),
     _vm._v(" "),
-    _c("small", [_vm._v(_vm._s(_vm.message.author))])
+    _c("small", [_vm._v(_vm._s(_vm.message.user.name))])
   ])
 }
 var staticRenderFns = []
@@ -48866,25 +48872,21 @@ Vue.component('chat-composer', __webpack_require__(/*! ./components/ChatComposer
 var app = new Vue({
   el: '#app',
   data: {
-    messages: [{
-      id: 0,
-      message: 'This is the first Message',
-      author: 'Nayan'
-    }, {
-      id: 1,
-      message: 'This is the Second Message',
-      author: 'Prabbhat'
-    }, {
-      id: 2,
-      message: 'This is the Third Message',
-      author: 'Rahul'
-    }]
+    messages: []
   },
   methods: {
     addMessage: function addMessage(message) {
       this.messages.push(message);
       console.log('message send');
+      axios.post('messages', message);
     }
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('messages').then(function (response) {
+      _this.messages = response.data;
+    });
   }
 });
 
